@@ -6,9 +6,9 @@ The user has the options of password length and which types of characters they w
 
 ## Usage
 
-<img src="./assets/images/pass_gen_screenshot.png" width=800 />
-
 Link to the application: https://patrbraun.github.io/passgen/
+
+![Passgen screenshot](assets\images\pass_gen_screenshot.PNG)
 
 Click the "Generate Password" button to start.
 
