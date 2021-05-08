@@ -1,4 +1,4 @@
-# passgen
+# Password-Generator
 
 This application is used to generate a password.
 
@@ -6,7 +6,7 @@ The user has the options of password length and which types of characters they w
 
 ## Usage
 
-Link to the application: https://patrbraun.github.io/passgen/
+Link to the application: https://patrbraun.github.io/Password-Generator/
 
 ![Passgen screenshot](assets/images/pass_gen_screenshot.PNG)
 
