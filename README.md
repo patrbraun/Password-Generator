@@ -6,7 +6,7 @@ The user has the options of password length and which types of characters they w
 
 ## Usage
 
-![Passgen screenshot](/assets/images/pass_gen_screenshot.png)
+<img src="./assets/images/pass_gen_screenshot.png" width=800 />
 
 Link to the application: https://patrbraun.github.io/passgen/
 
