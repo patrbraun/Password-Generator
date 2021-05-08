@@ -1,7 +1,7 @@
 // Assignment Code
 
 //special chars arrays
-var specialCharsArray = "!%".split("");
+var specialCharsArray = "!@%+/\'#$^?:,(){}[]~`-_.".split("");
 
 //number arrays
 var numberArray = "1234567890".split("");
@@ -45,14 +45,16 @@ function getPassword(){
     var upper = confirm("Do you want uppercase letters?");
     var lower = confirm("Do you want lowercase letters?");
 
-    // if((specialChars || numbers || upper || lower))
-    // {
-    //   goodChoice = true;
-    // }
-    // else{
-    //   promt("Please choose atleast one type of character");
-    // }
+    if(((!specialChars)&&(!numbers)&&(!upper)&&(!lower)))
+    {
+      console.log("None selected");
+      alert("Please choose atleast one type of character");
+      goodChoice = false;
+    }
+    else{
+      console.log("Some selected");
       goodChoice = true;
+    }
   }
 
   //Create an object to store the unser inputs
