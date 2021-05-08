@@ -3,7 +3,7 @@
 //max and min password length
 var minLength = 8;
 var maxLength = 128;
-var lengthGuide = " ("+ minLength +" <= password <= " + maxLength +")";
+var lengthGuide = "How many characters would you like in your password? ("+ minLength +" <= password <= " + maxLength +")";
 
 //Special chars arrays
 var specialCharsArray = "!@%+/\'#$^?:,(){}[]~`-_.".split("");
@@ -20,7 +20,7 @@ var upperCassArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 //function to prompt user for pass options.
 function getPassword(){
   //Variable to store length of password.
-  var length = parseInt(prompt("How many characters would you like in your password?" + lengthGuide));
+  var length = parseInt(prompt(lengthGuide));
   
   //Conditional input filter for length.
   var goodLength = false;
@@ -28,16 +28,16 @@ function getPassword(){
     if(isNaN(length))
     {
       alert("Input must be a number");
-      length = parseInt(prompt("How many characters would you like in your password?" + lengthGuide));
+      length = parseInt(prompt(lengthGuide));
     }
     else if(length < minLength){
       alert("Password length must be at least " + minLength + " characters");
-      length = parseInt(prompt("How many characters would you like in your password?" + lengthGuide));
+      length = parseInt(prompt(lengthGuide));
     }
     else if(length > maxLength)
     {
       alert("Password length cannot be larger than " + maxLength +" characters");
-      length = parseInt(prompt("How many characters would you like in your password?" + lengthGuide));
+      length = parseInt(prompt(lengthGuide));
     }
     else{
       goodLength = true;
