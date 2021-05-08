@@ -1,61 +1,77 @@
 // Assignment Code
 
 //special chars arrays
-var specialChars = [];
+var specialCharsArray = "!%".split("");
 
 //number arrays
-var numberArray = [];
+var numberArray = "1234567890".split("");
 
 //lower cass array
-var lowerCassArray = ["abcdefghijklmnopqrstuvwxyz"].split();
+var lowerCassArray = "abcdefghijklmnopqrstuvwxyz".split("");
 
 //Upper case array
-var upperCassArray = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ"].split();
+var upperCassArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 //function to prompt user for pass options
 function getPassword(){
   //create a varriable to store length of password
-  var length = parseInt(
-    prompt("How many characters would you like the password to be?")
-  )
+  var length = parseInt(prompt("How many characters would you like the password to be?"));
   //conditional input filter
-  if (number.isNaN(length)){
-    alert("password must be a number");
-    return null; 
-  }
-  //conditional statement to check is pass len is atleast 8
-  if(length < 8){
-    alert("Password length must be at least 8 characters")
-    return null;
-  }
-  //conditional statement to check if pass len is >= 128
-  if(length > 128){
-    alert("Password length cannot be larger than 128 characters")
-    return null;
+  var goodLength = false;
+  while (!goodLength){
+    if(isNaN(length))
+    {
+      alert("Input must be a number");
+      length = parseInt(prompt("How many characters would you like the password to be?"));
+    }
+    else if(length < 8){
+      alert("Password length must be at least 8 characters");
+      length = parseInt(prompt("How many characters would you like the password to be?"));
+    }
+    else if(length > 128)
+    {
+      alert("Password length cannot be larger than 128 characters");
+      length = parseInt(prompt("How many characters would you like the password to be?"));
+    }
+    else{
+      goodLength = true;
+    }
   }
 
-  //create configuration prompt for the type of characters the user wants to use in password.
-  //TODO
+  var goodChoice = false;
+  while(!goodChoice){
+    var specialChars = confirm("Do you want special characters?");
+    var numbers = confirm("Do you want numbers?");
+    var upper = confirm("Do you want uppercase letters?");
+    var lower = confirm("Do you want lowercase letters?");
 
-  //need to create a conditional statement to check if user included atleast one of the char types. return user back to start of application.
-  //TODO
+    // if((specialChars || numbers || upper || lower))
+    // {
+    //   goodChoice = true;
+    // }
+    // else{
+    //   promt("Please choose atleast one type of character");
+    // }
+      goodChoice = true;
+  }
 
   //Create an object to store the unser inputs
   var possiblePass = {
     //we need to store length and all characters selected by user
-    length: lenght,
+    length: length,
     specialChars: specialChars,
+    numbers: numbers,
+    upper: upper,
+    lower: lower
   }
 
-  return possiblePass
+  return possiblePass;
 }
 
 //create a function for getting a random element from an array
 function getRandomLetters(arr) {
-  var random = Math.floor(Math.random * arr.length);//some kind of math problem arr.length
-  // save them to a variable
-  var rand = arr[random];
-  return rand;
+  var random = Math.floor(Math.random() * arr.length);//some kind of math problem arr.length
+  return arr[random];
 }
 
 //Create a function to generate the password with the user inputs
@@ -76,22 +92,43 @@ function generatePassword(){
   //write a condition that adds the array for special characters into the array of possible characters based on the user inputs
   //then push the new random characters into guarenteed characters. Two methods to look up here are push and concat.
   if(options.specialChars){
-    possibleChars = possibleChars.concat(specialChars);
-    guarChars.push(getRandomLetters(specialChar))
+    possibleChars = possibleChars.concat(specialCharsArray);
+    guarChars.push(getRandomLetters(specialCharsArray));
   }
+  if(options.numbers){
+    possibleChars = possibleChars.concat(numberArray);
+    guarChars.push(getRandomLetters(numberArray));
+  }
+  if(options.upper){
+    possibleChars = possibleChars.concat(upperCassArray);
+    guarChars.push(getRandomLetters(upperCassArray));
+  }
+  if(options.lower){
+    possibleChars = possibleChars.concat(lowerCassArray);
+    guarChars.push(getRandomLetters(lowerCassArray));
+  }
+
+  possibleChars = possibleChars.join("");
 
   //Create a for loop to iterate over the password length from the options object
   for(var i = 0; i <options.length; i++) {
     var possiblePass = getRandomLetters(possibleChars);
-
-    passResult.push(possiblePass)
+    passResult.push(possiblePass);
   }
 
   //loop over guarChars and insert each character into passResult, to guarantee atleast one of each chosen character.
-  for(var i = 0; i <passResult.length; i++) {
-      //prevent subsequent loops from overriding previous inserts
+  console.log(passResult);
+  console.log(guarChars);
+  usedIndex = [];
+  for(var i = 0; i < guarChars.length; i++) {
+    var randIndex = Math.floor(Math.random() * passResult.length);
+    while(usedIndex.includes(randIndex))
+    {
+      randIndex = Math.floor(Math.random() * passResult.length);
+    }
+    passResult[randIndex] = guarChars[i];
+    usedIndex.push(randIndex);
   }
-
   return passResult.join("");
 }
 
