@@ -1,43 +1,50 @@
 // Assignment Code
 
-//special chars arrays
+//max and min password length
+var minLength = 8;
+var maxLength = 128;
+var lengthGuide = " ("+ minLength +" <= password <= " + maxLength +")";
+
+//Special chars arrays
 var specialCharsArray = "!@%+/\'#$^?:,(){}[]~`-_.".split("");
 
-//number arrays
+//Number arrays
 var numberArray = "1234567890".split("");
 
-//lower cass array
+//Lower cass array
 var lowerCassArray = "abcdefghijklmnopqrstuvwxyz".split("");
 
 //Upper case array
 var upperCassArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-//function to prompt user for pass options
+//function to prompt user for pass options.
 function getPassword(){
-  //create a varriable to store length of password
-  var length = parseInt(prompt("How many characters would you like the password to be?"));
-  //conditional input filter
+  //Variable to store length of password.
+  var length = parseInt(prompt("How many characters would you like in your password?" + lengthGuide));
+  
+  //Conditional input filter for length.
   var goodLength = false;
   while (!goodLength){
     if(isNaN(length))
     {
       alert("Input must be a number");
-      length = parseInt(prompt("How many characters would you like the password to be?"));
+      length = parseInt(prompt("How many characters would you like in your password?" + lengthGuide));
     }
-    else if(length < 8){
-      alert("Password length must be at least 8 characters");
-      length = parseInt(prompt("How many characters would you like the password to be?"));
+    else if(length < minLength){
+      alert("Password length must be at least " + minLength + " characters");
+      length = parseInt(prompt("How many characters would you like in your password?" + lengthGuide));
     }
-    else if(length > 128)
+    else if(length > maxLength)
     {
-      alert("Password length cannot be larger than 128 characters");
-      length = parseInt(prompt("How many characters would you like the password to be?"));
+      alert("Password length cannot be larger than " + maxLength +" characters");
+      length = parseInt(prompt("How many characters would you like in your password?" + lengthGuide));
     }
     else{
       goodLength = true;
     }
   }
 
+  //Asks user for types of characters to use and forces them to pick atleast one.
   var goodChoice = false;
   while(!goodChoice){
     var specialChars = confirm("Do you want special characters?");
@@ -47,19 +54,16 @@ function getPassword(){
 
     if(((!specialChars)&&(!numbers)&&(!upper)&&(!lower)))
     {
-      console.log("None selected");
       alert("Please choose atleast one type of character");
       goodChoice = false;
     }
     else{
-      console.log("Some selected");
       goodChoice = true;
     }
   }
 
-  //Create an object to store the unser inputs
+  //Use an object to track user inputs.
   var possiblePass = {
-    //we need to store length and all characters selected by user
     length: length,
     specialChars: specialChars,
     numbers: numbers,
@@ -70,29 +74,30 @@ function getPassword(){
   return possiblePass;
 }
 
-//create a function for getting a random element from an array
+//Gets a random element from a given array.
 function getRandomLetters(arr) {
   var random = Math.floor(Math.random() * arr.length);//some kind of math problem arr.length
   return arr[random];
 }
 
-//Create a function to generate the password with the user inputs
+//Generates a password with user inputs.
 function generatePassword(){
-  //set a variable to call my getPassword function
+  //Call myPassword() and stores the result (an object with user inputs).
   var options = getPassword();
 
-  //variable to store the password as it is being concatenated
+  //Variable to store the final password.
   var passResult = [];
 
-  //create a variable to store the types of characters to include into the password
+  //Variable to store the types of characters to use.
   var possibleChars = [];
 
-  //create a variable to store each type of guarenteed characters
+  //Variable to store a guaranteed character of each chosen type.
   var guarChars = [];
 
 
-  //write a condition that adds the array for special characters into the array of possible characters based on the user inputs
-  //then push the new random characters into guarenteed characters. Two methods to look up here are push and concat.
+  //Conditions to check each type of characters the user wants
+  //If the user wants a type of character, we add those characters to the
+  //possibleChars array and one of those characters to the guarChars array.
   if(options.specialChars){
     possibleChars = possibleChars.concat(specialCharsArray);
     guarChars.push(getRandomLetters(specialCharsArray));
@@ -112,15 +117,16 @@ function generatePassword(){
 
   possibleChars = possibleChars.join("");
 
-  //Create a for loop to iterate over the password length from the options object
+  //Iterates over the password length from the options object.
+  //Adds random characters from possibleChars to possiblePass.
   for(var i = 0; i <options.length; i++) {
     var possiblePass = getRandomLetters(possibleChars);
     passResult.push(possiblePass);
   }
 
-  //loop over guarChars and insert each character into passResult, to guarantee atleast one of each chosen character.
-  console.log(passResult);
-  console.log(guarChars);
+  //loop over guarChars and insert each character into passResult, 
+  //to guarantee atleast one of each chosen character.
+  //usedIndex is used to prevent overriding a previous invertion.
   usedIndex = [];
   for(var i = 0; i < guarChars.length; i++) {
     var randIndex = Math.floor(Math.random() * passResult.length);
